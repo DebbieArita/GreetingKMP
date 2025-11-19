@@ -17,6 +17,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -25,18 +27,17 @@ import greetingkmp.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
-fun App() {
+fun App(mainViewModel: MainViewModel = viewModel()) {
     MaterialTheme {
-        val greeting = remember { Greeting().greet() }
+        val greetings by mainViewModel.greetingList.collectAsStateWithLifecycle()
 
         Column(
             modifier = Modifier
-                .padding(all = 10.dp)
                 .safeContentPadding()
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            greeting.forEach { greeting ->
+            greetings.forEach { greeting ->
                 Text(greeting)
                 HorizontalDivider()
             }
