@@ -30,6 +30,14 @@ kotlin {
             implementation(libs.kotlin.test)
         }
     }
+
+    sourceSets {
+        all { languageSettings.optIn("kotlin.time.ExperimentalTime") }
+
+        commonMain.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+        }
+    }
 }
 
 android {
